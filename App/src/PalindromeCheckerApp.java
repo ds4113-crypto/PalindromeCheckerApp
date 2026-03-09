@@ -7,35 +7,51 @@ import java.util.ArrayDeque;
 public class PalindromeCheckerApp {
     public static void main(String[] args) {
 
-        // Define the input string
-        String input = "level";
+        String input = "A man a plan a canal Panama"
+                .replaceAll("[^a-zA-Z0-9]", "")
+                .toLowerCase();
 
-        // Create a LinkedList to store characters
-        LinkedList<Character> list = new LinkedList<>();
+        // Inject strategy (Two Pointer Strategy here)
+        PalindromeStrategy strategy = new TwoPointerStrategy();
 
-        // Add each character to the linked list
-        for (char c : input.toCharArray()) {
-            list.add(c);
-        }
+        // Capture start time
+        long startTime = System.nanoTime();
 
-        // Flag to track palindrome state
-        boolean isPalindrome = true;
+        boolean result = strategy.check(input);
 
-        // Compare until only one or zero elements remain
-        while (list.size() > 1) {
+        // Capture end time
+        long endTime = System.nanoTime();
 
-            char first = list.removeFirst();
-            char last = list.removeLast();
+        long duration = endTime - startTime;
 
-            if (first != last) {
-                isPalindrome = false;
-                break;
-            }
-        }
-
-        // Display result
+        // Display results
         System.out.println("Input: " + input);
-        System.out.println("Is Palindrome?:");
-        System.out.println(isPalindrome);
+        System.out.println("Using Strategy: TwoPointerStrategy");
+        System.out.println("Is Palindrome?: " + result);
+        System.out.println("Execution Time (nanoseconds): " + duration);
+    }
+}
+
+interface PalindromeStrategy {
+    boolean check(String input);
+}
+
+class TwoPointerStrategy implements PalindromeStrategy {
+
+    @Override
+    public boolean check(String input) {
+
+        int start = 0;
+        int end = input.length() - 1;
+
+        while (start < end) {
+            if (input.charAt(start) != input.charAt(end)) {
+                return false;
+            }
+            start++;
+            end--;
+        }
+
+        return true;
     }
 }
