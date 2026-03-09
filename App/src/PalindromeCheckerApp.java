@@ -3,24 +3,35 @@ import java.util.Scanner;
 public class PalindromeCheckerApp {
     public static void main(String[] args) {
 
-        Scanner scanner = new Scanner(System.in);
+        // Declare and initialize the input string
+        String input = "radar";
 
-        System.out.print("Enter a string: ");
-        String input = scanner.nextLine();
+        // Convert the string into a character array
+        char[] chars = input.toCharArray();
 
+        // Initialize pointer at the beginning
+        int start = 0;
+
+        // Initialize pointer at the end
+        int end = chars.length - 1;
+
+        // Assume palindrome initially
         boolean isPalindrome = true;
 
-        // Check characters from start and end
-        for (int j = 0; j < input.length() / 2; j++) {
-            if (input.charAt(j) != input.charAt(input.length() - 1 - j)) {
+        // Continue comparison until pointers cross
+        while (start < end) {
+
+            if (chars[start] != chars[end]) {
                 isPalindrome = false;
                 break;
             }
+
+            start++;
+            end--;
         }
 
-        System.out.println("Input text: " + input);
-        System.out.println("Is it a Palindrome?: " + isPalindrome);
-
-        scanner.close();
+        // Display result
+        System.out.println("Input: " + input);
+        System.out.println("Is Palindrome?: " + isPalindrome);
     }
 }
